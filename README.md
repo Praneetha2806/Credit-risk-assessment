@@ -116,12 +116,12 @@ pip install pandas numpy scikit-learn matplotlib seaborn
 
 2. Download the dataset from [Kaggle](https://www.kaggle.com/c/GiveMeSomeCredit) and place it at:
    ```
-   cs-training.csv/cs-training.csv
+   data/cs-training.csv
    ```
 
 3. Launch Jupyter from the `final_project/` directory so relative paths resolve:
    ```bash
-   jupyter notebook credit_risk_final_project.ipynb
+   jupyter notebook notebooks/credit_risk_final_project.ipynb
    ```
 
 4. Run all cells top to bottom. Section 9 will output the optimal threshold and confusion matrix.
@@ -142,4 +142,4 @@ pip install pandas numpy scikit-learn matplotlib seaborn
 
 **Praneetha Gunturu**  
 MS Business Analytics — San Francisco State University  
-[LinkedIn](https://linkedin.com/in/your-profile) · [GitHub](https://github.com/your-username)
+[LinkedIn](www.linkedin.com/in/gunturu-praneetha/) 
