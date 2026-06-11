@@ -1,0 +1,35 @@
+# Data files (download separately from Kaggle)
+cs-training.csv/
+*.csv
+*.xlsx
+*.parquet
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs & outputs
+*.log
+figures/
+outputs/
