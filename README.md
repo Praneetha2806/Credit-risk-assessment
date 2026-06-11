@@ -1,11 +1,5 @@
 # ML for Business Analysts — Git + GitHub Demo Repo
 
-
-
-A \*\*sample README.md\*\* to demonstrate common \*Markdown\* syntax you’ll use in GitHub.
-
-
-
 ---
 
 
