@@ -10,6 +10,7 @@
 # We don’t need to push them to GitHub.
 .ipynb_checkpoints/
 
+
 # 2) Python cache files
 # Python creates these automatically when running code.
 # They are not useful for our repo.
