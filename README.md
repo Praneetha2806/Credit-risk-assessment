@@ -142,4 +142,4 @@ pip install pandas numpy scikit-learn matplotlib seaborn
 
 **Praneetha Gunturu**  
 MS Business Analytics — San Francisco State University  
-[LinkedIn](www.linkedin.com/in/gunturu-praneetha/) 
+[LinkedIn](https://www.linkedin.com/in/gunturu-praneetha/) 
