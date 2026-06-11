@@ -1,0 +1,63 @@
+###############################################################################
+# .gitignore file for Data Science / Machine Learning projects
+# ------------------------------------------------------------
+# Git will ignore anything listed here. This helps keep our repos clean.
+# Think of it like telling Git: "Don’t bother tracking these files."
+###############################################################################
+
+# 1) Jupyter Notebook checkpoints
+# These are auto-created backup files by Jupyter.
+# We don’t need to push them to GitHub.
+.ipynb_checkpoints/
+
+# 2) Python cache files
+# Python creates these automatically when running code.
+# They are not useful for our repo.
+__pycache__/
+*.pyc
+
+# 3) MacOS system files
+# If someone in the group is on a Mac, Finder creates this file automatically.
+# It’s not needed in GitHub.
+.DS_Store
+
+# 4) R history files
+# If you use RStudio, these files store your command history and session.
+# Not needed in GitHub.
+.Rhistory
+.RData
+.Rproj.user/
+
+# 5) Data folder (optional)
+# By default, Git will track all files, including large datasets.
+# If you have a folder named "data/" with big files, you may NOT want to
+# upload those to GitHub (to save space and time).
+#
+# To activate ignoring, remove the '#' in front of 'data/' below.
+# NOTE: This will ignore *all* files inside the data/ folder.
+#
+# data/
+
+# 6) Virtual environments
+# Always ignore your virtual environment folders.
+# These can be huge and don’t belong in GitHub.
+# Instead, share requirements.txt so others can recreate the environment.
+
+.venv/
+env/
+venv/
+.virtual_documents/
+
+# 7) Other files and folders of your choice: 
+anaconda_projects/
+experimentation/
+figures/
+
+###############################################################################
+# END OF FILE
+# Rule of thumb: Only commit what’s needed to reproduce your project:
+#   - Your notebooks
+#   - Your scripts
+#   - Your small sample data
+#   - Documentation (README.md, etc.)
+###############################################################################
