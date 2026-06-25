@@ -24,13 +24,15 @@ Lenders use models like this to decide whether to approve a loan, set a credit l
 ## Project Structure
 
 ```
-credit-risk-assessment/
+final_project/
 │
-├── credit_risk_final_project.ipynb   # Main notebook
-├── cs-training.csv/
-│   └── cs-training.csv               # Dataset (not included in repo)
+├── code/
+│   └── credit_risk_final_project.ipynb   # Main notebook (run from inside this folder)
+├── cs-training.csv                       # Dataset — place directly here, NOT in a subfolder
 └── README.md
 ```
+
+> The notebook resolves the dataset path as `DATA_PATH = Path("..") / "cs-training.csv"` — i.e. one level up from wherever the notebook is running. Place the CSV in `final_project/`, not inside `code/`.
 
 ---
 
@@ -74,25 +76,52 @@ Key features include revolving utilization, age, number of open credit lines, pa
 - ROC and Precision-Recall curve plots for the primary model
 
 ### 5. Threshold Optimization
-Custom cost-benefit payoff function sweeping thresholds from 0.02 to 0.60 to maximize expected value per applicant:
+Custom cost-benefit payoff function sweeping thresholds from 0.02 to 0.60 to maximize expected value per applicant. Payoffs are business-justified dollar values rather than symbolic placeholders:
 
 | Outcome | Payoff |
 |---------|--------|
-| True Positive (catch bad borrower) | +$B_{TP}$ |
-| False Positive (wrongly flag good borrower) | −$C_{FP}$ |
-| False Negative (miss bad borrower) | −$C_{FN}$ |
+| True Positive (catch bad borrower) | +$500 |
+| False Positive (wrongly flag good borrower) | −$50 |
+| False Negative (miss bad borrower) | −$2,500 |
 | True Negative | $0 |
+
+This is roughly a 1 : 5 : 50 ratio — missing a default costs 5× the benefit of catching one, and 50× the cost of a false alarm.
 
 ---
 
 ## Key Results
 
-| Model | ROC-AUC | PR-AUC |
+| Model | ROC-AUC (test) | PR-AUC (test) |
 |-------|---------|--------|
-| Logistic Regression | ~0.835 | — |
-| Random Forest (tuned) | **best** | **best** |
+| Logistic Regression | 0.8332 | 0.3267 |
+| Random Forest (initial, untuned) | 0.8355 | 0.3407 |
+| Random Forest (tuned via GridSearchCV) | *pending* | *pending* |
 
-> Exact values will populate once the notebook is run end-to-end against the dataset.
+**Confusion matrix @ 0.50 threshold (default cutoff):**
+
+*Logistic Regression*
+```
+              precision    recall  f1-score   support
+           0     0.9765    0.7627    0.8565     27995
+           1     0.1834    0.7441    0.2943      2005
+
+confusion matrix:
+ [[21353  6642]
+ [  513  1492]]
+```
+
+*Random Forest (initial)*
+```
+              precision    recall  f1-score   support
+           0     0.9431    0.9902    0.9661     27995
+           1     0.5477    0.1661    0.2549      2005
+
+confusion matrix:
+ [[27720   275]
+ [ 1672   333]]
+```
+
+> The Random Forest is tuned via 5-fold `GridSearchCV` over `n_estimators`, `max_depth`, and `min_samples_leaf` (60 fits). The tuned model's ROC-AUC/PR-AUC, its ROC/Precision-Recall curves, and the cost-benefit threshold sweep (Section 9 of the notebook, using the $500 / −$50 / −$2,500 payoffs above) are still pending a completed end-to-end run — this section will be updated with the optimal threshold, the resulting confusion matrix, and the expected-cost reduction vs. the default 0.50 cutoff once that finishes.
 
 Recommended threshold determined by expected-value sweep; confusion matrix and classification report provided at both the default 0.5 and the business-optimal threshold.
 
@@ -114,14 +143,15 @@ pip install pandas numpy scikit-learn matplotlib seaborn
    cd credit-risk-assessment
    ```
 
-2. Download the dataset from [Kaggle](https://www.kaggle.com/c/GiveMeSomeCredit) and place it at:
+2. Download the dataset from [Kaggle](https://www.kaggle.com/c/GiveMeSomeCredit) and place `cs-training.csv` directly inside the `final_project/` folder (one level up from the notebook) — **not** in a `data/` or `cs-training.csv/` subfolder:
    ```
-   data/cs-training.csv
+   final_project/cs-training.csv
    ```
 
-3. Launch Jupyter from the `final_project/` directory so relative paths resolve:
+3. Launch Jupyter from inside the `code/` directory so the relative path `Path("..") / "cs-training.csv"` resolves correctly:
    ```bash
-   jupyter notebook notebooks/credit_risk_final_project.ipynb
+   cd final_project/code
+   jupyter notebook credit_risk_final_project.ipynb
    ```
 
 4. Run all cells top to bottom. Section 9 will output the optimal threshold and confusion matrix.
@@ -134,7 +164,7 @@ pip install pandas numpy scikit-learn matplotlib seaborn
 - **Advanced models:** XGBoost or LightGBM likely to improve AUC further
 - **Explainability:** SHAP values would make feature contributions transparent to underwriters
 - **Fairness:** age and income features warrant disparate impact analysis before production use
-- **Payoff constants:** the cost matrix in Section 9 uses illustrative values — real deployment requires input from a credit risk team
+- **Payoff constants:** the cost matrix in Section 9 uses business-justified illustrative values (+$500 / −$50 / −$2,500) rather than real, audited loss data — actual deployment requires input from a credit risk team to calibrate these
 
 ---
 
